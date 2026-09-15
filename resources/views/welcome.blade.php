@@ -11,7 +11,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
 
 </head>
 
@@ -51,6 +51,12 @@
             <li>
                 <a href="{{ route('home') }}">
                     خانه
+                </a>
+            </li>
+
+            <li>
+                <a href="{{ route('products.index') }}">
+                    محصولات
                 </a>
             </li>
 
@@ -157,6 +163,7 @@
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
                     </svg>
+                
                 </div>
                 <h4>پرداخت امن</h4>
                 <p>تضمین امنیت تراکنش‌ها</p>
@@ -199,7 +206,7 @@
                     <div class="accent-line"></div>
                 </div>
 
-                <a href="#" class="view-all">
+                <a href="{{ route('products.index') }}" class="view-all">
                     مشاهده همه
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                         <line x1="19" y1="12" x2="5" y2="12"/>
@@ -214,13 +221,13 @@
 
                 @forelse ($products as $product)
 
-                    <div class="product-card">
+                    <a href="{{ route('products.show', $product) }}" class="product-card">
 
                         {{-- Product Image --}}
                         <div class="product-image-wrapper">
 
                             @if ($product->image)
-                                <img src="{{ asset('app/images/' . $product->image) }}" alt="{{ $product->name }}" class="thumb">
+                                <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}" class="product-image">
                             @else
                                 <div class="no-image">
                                     <svg width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
@@ -241,17 +248,17 @@
 
                             {{-- Quick Actions --}}
                             <div class="quick-actions">
-                                <button class="action-btn wishlist" title="افزودن به علاقه‌مندی‌ها">
+                                <span class="action-btn wishlist" title="افزودن به علاقه‌مندی‌ها">
                                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                         <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
                                     </svg>
-                                </button>
-                                <button class="action-btn" title="مشاهده سریع">
+                                </span>
+                                <span class="action-btn" title="مشاهده سریع">
                                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                         <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
                                         <circle cx="12" cy="12" r="3"/>
                                     </svg>
-                                </button>
+                                </span>
                             </div>
 
                         </div>
@@ -260,7 +267,7 @@
                         {{-- Product Information --}}
                         <div class="product-info">
 
-                            <span class="product-category">دسته‌بندی</span>
+                            <span class="product-category">فروشگاه</span>
 
                             <h3 class="product-name">
                                 {{ $product->name }}
@@ -292,19 +299,19 @@
                                     </span>
                                 </div>
 
-                                <button class="add-to-cart" title="افزودن به سبد خرید">
+                                <span class="add-to-cart" title="مشاهده محصول">
                                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                                         <circle cx="9" cy="21" r="1"/>
                                         <circle cx="20" cy="21" r="1"/>
                                         <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
                                     </svg>
-                                </button>
+                                </span>
 
                             </div>
 
                         </div>
 
-                    </div>
+                    </a>
 
                 @empty
 
@@ -386,8 +393,8 @@
                 <div class="footer-col">
                     <h4>دسترسی سریع</h4>
                     <ul>
-                        <li><a href="#">صفحه اصلی</a></li>
-                        <li><a href="#">محصولات</a></li>
+                        <li><a href="{{ route('home') }}">صفحه اصلی</a></li>
+                        <li><a href="{{ route('products.index') }}">محصولات</a></li>
                         <li><a href="#">درباره ما</a></li>
                         <li><a href="#">تماس با ما</a></li>
                     </ul>
@@ -421,6 +428,27 @@
 
         </div>
     </footer>
+
+    <script>
+        // افکت خم‌شدن سه‌بعدی کارت محصولات با حرکت موس
+        if (window.matchMedia('(hover: hover)').matches) {
+            document.querySelectorAll('.product-card').forEach(function (card) {
+                card.addEventListener('mousemove', function (e) {
+                    var rect = card.getBoundingClientRect();
+                    var x = e.clientX - rect.left;
+                    var y = e.clientY - rect.top;
+                    var rotateX = ((y / rect.height) - 0.5) * -12;
+                    var rotateY = ((x / rect.width) - 0.5) * 12;
+                    card.style.setProperty('--rx', rotateX.toFixed(2) + 'deg');
+                    card.style.setProperty('--ry', rotateY.toFixed(2) + 'deg');
+                });
+                card.addEventListener('mouseleave', function () {
+                    card.style.setProperty('--rx', '0deg');
+                    card.style.setProperty('--ry', '0deg');
+                });
+            });
+        }
+    </script>
 
 </body>
 
