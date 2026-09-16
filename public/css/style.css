@@ -221,8 +221,9 @@ img { max-width: 100%; display: block; }
 .shop-card {
     display: flex;
     flex-direction: column;
-    background: #fff;
+    background: #d1d1d1;
     transition: var(--transition);
+    border-radius: 10px; 
 }
 
 .shop-card-media {
@@ -231,6 +232,7 @@ img { max-width: 100%; display: block; }
     background: var(--bg-soft);
     overflow: hidden;
     margin-bottom: 14px;
+    
 }
 
 .shop-card-media img {
