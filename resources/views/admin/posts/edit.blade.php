@@ -33,7 +33,7 @@
                 <label for="image">تصویر شاخص</label>
                 @if($post->image)
                     <div class="field-current-image">
-                        <img src="{{ asset('storage/' . $post->image) }}" alt="{{ $post->title }}">
+                        <img src="{{ asset('app/images/' . $product->image) }}" alt="{{ $post->title }}">
                         <span class="field-hint">تصویر فعلی — برای تغییر، فایل جدید انتخاب کنید</span>
                     </div>
                 @endif

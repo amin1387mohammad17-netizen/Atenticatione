@@ -227,7 +227,7 @@
                         <div class="product-image-wrapper">
 
                             @if ($product->image)
-                                <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}" class="product-image">
+                                <img src="{{ asset('app/images/' . $product->image) }}" alt="{{ $product->name }}" class="product-image">
                             @else
                                 <div class="no-image">
                                     <svg width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">

@@ -28,7 +28,7 @@
                     <tr>
                         <td>
                             @if($post->image)
-                                <img src="{{ asset('storage/' . $post->image) }}" alt="{{ $post->title }}" class="thumb">
+                                <img src="{{ asset('app/images/' . $post->image) }}" alt="{{ $post->title }}" class="thumb">
                             @else
                                 <span class="thumb-placeholder">—</span>
                             @endif
